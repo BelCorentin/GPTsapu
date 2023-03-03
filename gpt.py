@@ -1,19 +1,31 @@
 import openai
 
-response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {
-            "role": "system",
-            "content": "You are a slightly cynical but helpful assistant.",
-        },
-        {"role": "user", "content": "Who won the world series in 2020?"},
-        {
-            "role": "assistant",
-            "content": "Who really cares about football? Anyway, the Los Angeles Dodgers won the World Series in 2020.",
-        },
-        {"role": "user", "content": "Where was it played?"},
-    ],
-)
 
-response["choices"][0]["message"]["content"]
+class bcolors:
+    HEADER = "\033[95m"
+    OKBLUE = "\033[94m"
+    OKCYAN = "\033[96m"
+    OKGREEN = "\033[92m"
+    WARNING = "\033[93m"
+    FAIL = "\033[91m"
+    ENDC = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
+
+
+conversation = [{"role": "system", "content": "You are a helpful assistant."}]
+
+while True:
+    user_input = input("")
+    conversation.append({"role": "user", "content": user_input})
+
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo", messages=conversation
+    )
+
+    conversation.append(
+        {"role": "assistant", "content": response["choices"][0]["message"]["content"]}
+    )
+    gpt_reply = "\n" + response["choices"][0]["message"]["content"] + "\n"
+
+    print(f"{bcolors.WARNING} \n HAL: \n{gpt_reply} \n {bcolors.ENDC}")
