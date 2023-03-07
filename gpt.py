@@ -15,6 +15,9 @@ class bcolors:
 
 conversation = [{"role": "system", "content": "You are a helpful assistant."}]
 
+
+print(f"{bcolors.WARNING} \n HAL: \n I am ready to hear your query \n {bcolors.ENDC}")
+
 while True:
     user_input = input("")
     conversation.append({"role": "user", "content": user_input})
@@ -28,4 +31,4 @@ while True:
     )
     gpt_reply = "\n" + response["choices"][0]["message"]["content"] + "\n"
 
-    print(f"{bcolors.WARNING} \n HAL: \n{gpt_reply} \n {bcolors.ENDC}")
+    print(f"{bcolors.WARNING} \n HAL: {gpt_reply}  {bcolors.ENDC}")
